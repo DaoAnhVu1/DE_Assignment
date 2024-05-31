@@ -1,0 +1,11 @@
+{
+  "type": "record",
+  "name": "Activity",
+  "namespace": "model",
+  "fields": [
+    { "name": "studentCode", "type": "int" },
+    { "name": "activity", "type": "string" },
+    { "name": "numberOfFiles", "type": "int" },
+    { "name": "timestamp", "type": "string" }
+  ]
+}
