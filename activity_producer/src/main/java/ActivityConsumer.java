@@ -21,6 +21,7 @@ public class ActivityConsumer {
         props.put(ConsumerConfig.GROUP_ID_CONFIG, GROUP_ID);
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, KafkaAvroDeserializer.class.getName());
+        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
         props.put("schema.registry.url", "http://localhost:8081");
         props.put("specific.avro.reader", "true");
 
@@ -42,6 +43,7 @@ public class ActivityConsumer {
                         System.out.println("CONSUMED: " + activity);
                     }
                 }
+                Thread.sleep(500);
             }
         } catch (Exception e) {
             e.printStackTrace();

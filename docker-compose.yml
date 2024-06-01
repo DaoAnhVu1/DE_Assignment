@@ -70,10 +70,35 @@ services:
     ports:
       - 8443:8443
     volumes:
-      - ./nifi_volume/nifi_content_repository:/opt/nifi/nifi-current/content_repository
-      - ./nifi_volume/nifi_database_repository:/opt/nifi/nifi-current/database_repository
-      - ./nifi_volume/nifi_flowfile_repository:/opt/nifi/nifi-current/flowfile_repository
-      - ./nifi_volume/nifi_provenance_repository:/opt/nifi/nifi-current/provenance_repository
-      - ./nifi_volume/nifi_state:/opt/nifi/nifi-current/state
+      - ./hadoop_config:/opt/hadoop_config # Mount Hadoop configuration files
     depends_on:
       - broker01
+
+  namenode:
+    image: apache/hadoop:3
+    hostname: namenode
+    command: [ "hdfs", "namenode" ]
+    ports:
+      - 9870:9870
+    env_file:
+      - ./config
+    environment:
+      ENSURE_NAMENODE_DIR: "/tmp/hadoop-root/dfs/name"
+  datanode:
+    image: apache/hadoop:3
+    command: [ "hdfs", "datanode" ]
+    env_file:
+      - ./config
+  resourcemanager:
+    image: apache/hadoop:3
+    hostname: resourcemanager
+    command: [ "yarn", "resourcemanager" ]
+    ports:
+      - 8088:8088
+    env_file:
+      - ./config
+  nodemanager:
+    image: apache/hadoop:3
+    command: [ "yarn", "nodemanager" ]
+    env_file:
+      - ./config

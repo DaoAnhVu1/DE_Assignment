@@ -1,4 +1,5 @@
 import io.confluent.kafka.serializers.KafkaAvroSerializer;
+import io.confluent.kafka.serializers.subject.RecordNameStrategy;
 import model.Activity;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -23,6 +24,7 @@ public class ActivityProducer {
 //            props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
             props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, KafkaAvroSerializer.class.getName());
             props.put("schema.registry.url", "http://localhost:8081");
+            props.put("value.subject.name.strategy", RecordNameStrategy.class.getName());
             KafkaProducer<String, Activity> producer = new KafkaProducer<>(props);
 
 //            Get the csv file and parse it
@@ -38,15 +40,12 @@ public class ActivityProducer {
                         Activity currentActivity = Activity.newBuilder().setStudentCode(studentCode).setActivity(activity).setNumberOfFiles(numberOfFiles).setTimestamp(timeStamp).build();
 //                        ProducerRecord<String, String> record = new ProducerRecord<>(TOPIC_NAME, csvRecord.get(0) + "," + csvRecord.get(1));
                         ProducerRecord<String, Activity> record = new ProducerRecord<>(TOPIC_NAME, currentActivity);
-                        producer.send(record, new Callback() {
-                            @Override
-                            public void onCompletion(RecordMetadata metadata, Exception exception) {
-                                if (exception == null) {
-                                    System.out.println("Send record: " + record.value());
-                                } else {
-                                    System.out.println("Error sending record: " + record.value());
-                                    System.out.println(exception.getMessage());
-                                }
+                        producer.send(record, (metadata, exception) -> {
+                            if (exception == null) {
+                                System.out.println("Send record: " + record.value());
+                            } else {
+                                System.out.println("Error sending record: " + record.value());
+                                System.out.println(exception.getMessage());
                             }
                         });
 
