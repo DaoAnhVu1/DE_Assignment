@@ -1,0 +1,31 @@
+<configuration>
+    <property>
+        <name>dfs.namenode.rpc-bind-host</name>
+        <value>0.0.0.0</value>
+        <description>Controls what IP address the NameNode RPC server binds to. 0.0.0.0 means all
+            available.</description>
+    </property>
+    <property>
+        <name>dfs.namenode.servicerpc-bind-host</name>
+        <value>0.0.0.0</value>
+        <description>Controls what IP address the NameNode service RPC server binds to. 0.0.0.0
+            means all available.</description>
+    </property>
+    <property>
+        <name>dfs.namenode.http-bind-host</name>
+        <value>0.0.0.0</value>
+        <description>Controls what IP address the NameNode HTTP server binds to. 0.0.0.0 means all
+            available.</description>
+    </property>
+    <property>
+        <name>dfs.namenode.https-bind-host</name>
+        <value>0.0.0.0</value>
+        <description>Controls what IP address the NameNode HTTPS server binds to. 0.0.0.0 means all
+            available.</description>
+    </property>
+    <property>
+        <name>dfs.replication</name>
+        <value>1</value>
+        <description>The default block replication.</description>
+    </property>
+</configuration>
