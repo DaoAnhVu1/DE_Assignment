@@ -1,15 +1,18 @@
-import io.confluent.kafka.serializers.KafkaAvroSerializer;
-import io.confluent.kafka.serializers.subject.RecordNameStrategy;
-import model.Activity;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
-import org.apache.commons.csv.CSVRecord;
-import org.apache.kafka.clients.producer.*;
-import org.apache.kafka.common.serialization.StringSerializer;
-
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Properties;
+
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
+import org.apache.kafka.clients.producer.KafkaProducer;
+import org.apache.kafka.clients.producer.ProducerConfig;
+import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.common.serialization.StringSerializer;
+
+import io.confluent.kafka.serializers.KafkaAvroSerializer;
+import io.confluent.kafka.serializers.subject.RecordNameStrategy;
+import model.Activity;
 
 public class ActivityProducer {
     private static final String TOPIC_NAME = "vdt2024";
@@ -49,7 +52,7 @@ public class ActivityProducer {
                             }
                         });
 
-                        Thread.sleep(500);
+                        Thread.sleep(1000);
                     }
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
