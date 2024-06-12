@@ -52,7 +52,7 @@ public class ActivityProducer {
                             }
                         });
 
-                        Thread.sleep(1000);
+                        Thread.sleep(200);
                     }
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
